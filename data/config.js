@@ -1,5 +1,5 @@
 // data/config.js
-categoryConfig = [
+window.categoryConfig = [
     { id: 'agama', label: 'Agama', cls: 'cat-1' },
     { id: 'indo', label: 'Bahasa Indonesia', cls: 'cat-2' },
     { id: 'english', label: 'English', cls: 'cat-3' },
@@ -11,6 +11,4 @@ categoryConfig = [
     { id: 'dunia', label: 'Dunia', cls: 'cat-9' },
     { id: 'others', label: 'Others', cls: 'cat-10' },
     { id: 'random', label: 'Random', cls: 'cat-11' }
-    // Contoh menambah kategori baru:
-    // { id: 'tik', label: 'TIK', cls: 'cat-1' }
 ];
