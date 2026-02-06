@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Narang Education - 11 Subjects</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- MAIN STYLES -->
+    <style>
+        /* --- PASTE SEMUA STYLE ASLI DI SINI --- */
+        /* Copy ALL CSS from your original code here */
+        /* Pastikan tidak ada yang dihapus */
+        
+        body { margin: 0; padding: 0; overflow: hidden; background: #f0f0f0; font-family: 'Inter', sans-serif; }
+        body header, body .header, body #header, body .navbar, body .nav { position: relative !important; z-index: 10000 !important; }
+        
+        /* ... (ALL YOUR CSS HERE) ... */
+        
+        /* Tambahkan ini di akhir style untuk Arabic */
+        .arabic-text {
+            font-family: 'Scheherazade New', 'Amiri', serif;
+            font-size: 1.3em;
+            direction: rtl;
+            text-align: right;
+            line-height: 1.8;
+            unicode-bidi: bidi-override;
+        }
+        
+        .vertical-fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+        }
+        
+        .num {
+            border-bottom: 1px solid;
+            padding: 0 3px;
+        }
+        
+        .den {
+            padding: 0 3px;
+        }
+        
+        .image-container {
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- CONTAINER UTAMA -->
+<div id="narang-riddle-pro">
+    <!-- Struktur HTML lengkap dari kode asli -->
+    <!-- Copy-Paste SEMUA HTML dari <div id="custom-overlay"> sampai </div> -->
+    <!-- Pastikan tidak ada yang terpotong -->
+</div>
+
+<!-- DATA LOADER SCRIPT -->
+<script>
+// Configuration
+const NARANG_CONFIG = {
+    DATA_BASE_URL: "https://raw.githubusercontent.com/YOUR_USERNAME/narang-education-data/main/data/",
+    VERSION: "1.0.0"
+};
+
+// Data storage
+let gameData = {};
+
+// Load data dari GitHub
+async function loadCategoryData(categoryId) {
+    try {
+        const response = await fetch(`${NARANG_CONFIG.DATA_BASE_URL}${categoryId}.json?v=${Date.now()}`);
+        if (!response.ok) throw new Error('Failed to fetch');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error loading ${categoryId}:`, error);
+        return null;
+    }
+}
+
+// Load all categories
+async function loadAllCategories() {
+    const categories = ['agama', 'indo', 'english', 'ipa', 'math', 'seni', 'geo', 'sejarah', 'dunia', 'others', 'random'];
+    
+    for (const cat of categories) {
+        const data = await loadCategoryData(cat);
+        if (data) {
+            gameData[cat] = data[cat];
+        }
+    }
+    
+    return gameData;
+}
+
+// Initialize app setelah data dimuat
+async function initApp() {
+    console.log('Loading Narang Education App...');
+    
+    // Hide loading dari blogger
+    if (window.parent && window.parent.document) {
+        const loadingEl = window.parent.document.getElementById('narang-initial-loading');
+        if (loadingEl) loadingEl.style.display = 'none';
+    }
+    
+    // Load data
+    await loadAllCategories();
+    
+    // Initialize main app functions
+    if (typeof initNarangApp === 'function') {
+        initNarangApp();
+    }
+    
+    console.log('App initialized!');
+}
+
+// Content processor untuk Arabic, fractions, images
+function processContent(text) {
+    if (!text) return text;
+    
+    let processed = String(text);
+    
+    // Convert fractions: 1/2 menjadi vertical
+    processed = processed.replace(
+        /(\d+)\s*\/\s*(\d+)/g,
+        '<span class="vertical-fraction"><span class="num">$1</span><span class="den">$2</span></span>'
+    );
+    
+    // Process Arabic tags: [arabic:النص]
+    processed = processed.replace(
+        /\[arabic:(.+?)\]/g,
+        '<span class="arabic-text">$1</span>'
+    );
+    
+    // Process images: [img:url|caption]
+    processed = processed.replace(
+        /\[img:(.+?)(?:\|(.+?))?\]/g,
+        (match, url, caption) => `
+            <div class="image-container">
+                <img src="${url}" alt="${caption || 'Ilustrasi'}" loading="lazy">
+                ${caption ? `<div class="image-caption">${caption}</div>` : ''}
+            </div>
+        `
+    );
+    
+    return processed;
+}
+
+// Main app initialization
+function initNarangApp() {
+    // ==================== PASTE FUNGSI UTAMA DI SINI ====================
+    // Copy-Paste SEMUA JavaScript dari kode asli
+    // Tapi GANTI bagian gameData dengan yang sudah dimuat dari GitHub
+    
+    // Contoh: categoryConfig tetap sama
+    const categoryConfig = [
+        { id: 'agama', label: 'Agama', cls: 'cat-1' },
+        { id: 'indo', label: 'Bahasa Indonesia', cls: 'cat-2' },
+        { id: 'english', label: 'English', cls: 'cat-3' },
+        { id: 'ipa', label: 'IPA', cls: 'cat-4' },
+        { id: 'math', label: 'Matematika', cls: 'cat-5' },
+        { id: 'seni', label: 'Seni Budaya', cls: 'cat-6' },
+        { id: 'geo', label: 'Geografi', cls: 'cat-7' },
+        { id: 'sejarah', label: 'Sejarah', cls: 'cat-8' },
+        { id: 'dunia', label: 'Dunia', cls: 'cat-9' },
+        { id: 'others', label: 'Others', cls: 'cat-10' },
+        { id: 'random', label: 'Random', cls: 'cat-11' }
+    ];
+    
+    // Modifikasi fungsi showStudyScreen untuk process content
+    function showStudyScreen(topicData) {
+        session.topic = topicData.title;
+        session.summary = processContent(topicData.summary) || "Pelajari materi ini.";
+        session.qList = [...(topicData.questions || [])];
+        
+        document.getElementById('study-title').innerText = topicData.title;
+        document.getElementById('study-text').innerHTML = session.summary;
+        
+        switchScreen('screen-study');
+    }
+    
+    // Modifikasi fungsi showCategorySelection
+    function showCategorySelection() {
+        const list = document.getElementById('class-list');
+        list.innerHTML = "";
+        
+        categoryConfig.forEach((cat, index) => {
+            const item = document.createElement('div');
+            item.className = `nr-class-card ${cat.cls}`;
+            item.innerHTML = `<span class="nr-class-title">${cat.label}</span><span class="nr-class-icon"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg></span>`;
+            
+            if (gameData[cat.id]) {
+                item.onclick = () => showTopicSelection(cat.id);
+            } else {
+                item.style.opacity = "0.6";
+                item.style.cursor = "default";
+            }
+            list.appendChild(item);
+        });
+        
+        switchScreen('screen-class');
+    }
+    
+    // Modifikasi fungsi showTopicSelection
+    function showTopicSelection(catId) {
+        const list = document.getElementById('topic-list');
+        list.innerHTML = "";
+        const topics = gameData[catId];
+        
+        if (topics) {
+            topics.forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'nr-list-item';
+                item.innerHTML = `<span class="nr-list-title">${t.title}</span>`;
+                item.onclick = () => showStudyScreen(t);
+                list.appendChild(item);
+            });
+        }
+        switchScreen('screen-topic');
+    }
+    
+    // ... (FUNGSI LAINNYA TETAP SAMA) ...
+    
+    // ==================== AKHIR DARI PASTE ====================
+    
+    // Setelah semua fungsi didefinisikan, show login screen
+    setTimeout(() => {
+        if (document.getElementById('screen-login')) {
+            document.getElementById('screen-login').classList.add('active');
+        }
+    }, 100);
+}
+
+// Start the app when page loads
+document.addEventListener('DOMContentLoaded', initApp);
+
+// Fallback if DOM already loaded
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(initApp, 1);
+}
+</script>
+
+</body>
+</html>
